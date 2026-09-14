@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página no encontrada — Alta Copa Distribución</title>
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  .not-found{
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-block: var(--space-9);
+  }
+  .not-found .code{
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 3rem + 6vw, 7rem);
+    color: var(--color-gold);
+    line-height: 1;
+  }
+  .not-found h1{ margin-top: var(--space-4); }
+  .not-found p{ margin-top: var(--space-3); max-width: 440px; }
+  .not-found .btn{ margin-top: var(--space-7); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true"><span>AC</span></span>
+      <span>ALTA COPA<small>Distribución de bebidas</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#soluciones">Soluciones</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+      <div class="header-actions">
+        <a class="btn btn-primary btn-sm" href="contacto.html">Solicitar cotización</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú de navegación">
+          <svg class="icon icon-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg>
+          <svg class="icon icon-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <div class="not-found">
+      <span class="code">404</span>
+      <h1>Página no encontrada</h1>
+      <p>La página que buscas no existe o fue movida. Puedes volver al inicio o explorar nuestro catálogo de productos.</p>
+      <a class="btn btn-primary" href="index.html">Volver al inicio</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <span>&copy; <span data-year>2026</span> Alta Copa Distribución. Todos los derechos reservados.</span>
+      <span><a href="aviso-privacidad.html">Aviso de privacidad</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
