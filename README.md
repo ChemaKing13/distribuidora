@@ -33,9 +33,7 @@ Todos los datos de contacto (WhatsApp, teléfono, email, dirección, horario) es
 
 ```js
 var CONFIG = {
-  whatsappNumber: "525512345678", // sin '+' ni espacios
-  phoneDisplay: "+52 55 1234 5678",
-  phoneHref: "+525512345678",
+  whatsappNumber: "525548323739", // sin '+' ni espacios
   email: "contacto@altacopa.mx",
   address: "Av. Insurgentes Sur 1234, Col. Del Valle, Ciudad de México",
   hours: "Lunes a viernes, 9:00–18:00 h",
@@ -49,7 +47,25 @@ Al cambiar estos valores se actualizan automáticamente todos los enlaces y text
 
 ## Cómo funciona la cotización
 
-No hay carrito ni pagos. El formulario de `contacto.html` arma un mensaje con los datos capturados y abre WhatsApp (`wa.me`) con el mensaje prellenado para que el usuario lo envíe. Los botones "Solicitar cotización" del catálogo llevan a `contacto.html?producto=NombreCategoria`, que precargan automáticamente esa categoría en el formulario.
+No hay carrito ni pagos. El formulario de `contacto.html` envía los datos a **Web3Forms**, que los reenvía como correo a tu bandeja. El visitante no sale del sitio y no necesita WhatsApp. Si el envío falla (sin conexión, servicio caído), se muestra un error con un enlace a WhatsApp como respaldo.
+
+Los botones "Solicitar cotización" del catálogo llevan a `contacto.html?producto=NombreCategoria`, que precargan automáticamente esa categoría en el formulario.
+
+### Configurar el destino de las solicitudes (obligatorio)
+
+Sin este paso el formulario **no envía nada**. Toma un par de minutos y no requiere crear cuenta ni contraseña:
+
+1. Entra a [web3forms.com](https://web3forms.com) y escribe el correo donde quieres recibir las solicitudes.
+2. Te llega una **Access Key** (un UUID) a ese correo.
+3. Pégala en `contacto.html`, en el campo oculto al inicio del formulario:
+
+```html
+<input type="hidden" name="access_key" value="TU_ACCESS_KEY_DE_WEB3FORMS">
+```
+
+4. Envía una solicitud de prueba desde el sitio y confirma que llega a tu bandeja (revisa spam la primera vez).
+
+El plan gratuito cubre 250 solicitudes al mes. Para cambiar el correo de destino, genera una clave nueva con el correo deseado y reemplaza el valor.
 
 ## Ver el sitio localmente
 

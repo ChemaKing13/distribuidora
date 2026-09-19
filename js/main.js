@@ -7,9 +7,7 @@
   "use strict";
 
   var CONFIG = {
-    whatsappNumber: "525512345678", // formato internacional sin '+' ni espacios
-    phoneDisplay: "+52 55 1234 5678",
-    phoneHref: "+525512345678",
+    whatsappNumber: "525548323739", // formato internacional sin '+' ni espacios
     email: "contacto@altacopa.mx",
     address: "Av. Insurgentes Sur 1234, Col. Del Valle, Ciudad de México",
     hours: "Lunes a viernes, 9:00–18:00 h",
@@ -36,12 +34,6 @@
 
     document.querySelectorAll("[data-whatsapp-link]").forEach(function (el) {
       el.setAttribute("href", waLink);
-    });
-    document.querySelectorAll("[data-phone-link]").forEach(function (el) {
-      el.setAttribute("href", "tel:" + CONFIG.phoneHref);
-    });
-    document.querySelectorAll("[data-phone-text]").forEach(function (el) {
-      el.textContent = CONFIG.phoneDisplay;
     });
     document.querySelectorAll("[data-email-link]").forEach(function (el) {
       el.setAttribute("href", "mailto:" + CONFIG.email);
@@ -169,7 +161,7 @@
     }
   }
 
-  /* ---------- Formulario de cotización → WhatsApp ---------- */
+  /* ---------- Formulario de cotización → email (Web3Forms) ---------- */
   function setupQuoteForm() {
     var form = document.getElementById("quote-form");
     if (!form) return;
@@ -186,20 +178,88 @@
       }
 
       clearErrorSummary(form);
-      var message = buildWhatsAppMessage(form);
-      var url =
-        "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(message);
-
-      window.open(url, "_blank", "noopener");
-
-      form.hidden = true;
-      var success = document.getElementById("form-success");
-      if (success) {
-        success.classList.add("show");
-        success.setAttribute("tabindex", "-1");
-        success.focus();
-      }
+      sendQuote(form);
     });
+  }
+
+  function sendQuote(form) {
+    var button = form.querySelector('button[type="submit"]');
+    var label = button.textContent;
+    button.disabled = true;
+    button.textContent = "Enviando…";
+
+    var data = new FormData(form);
+    data.set("productos", data.getAll("productos").join(", "));
+    data.set(
+      "subject",
+      "Solicitud de cotización — " + (data.get("empresa") || "sitio web")
+    );
+
+    function fail(message) {
+      button.disabled = false;
+      button.textContent = label;
+      showSendError(form, message);
+    }
+
+    fetch("https://api.web3forms.com/submit", { method: "POST", body: data })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (result) {
+        if (result.success) {
+          showSuccess(form);
+        } else {
+          fail(result.message);
+        }
+      })
+      .catch(function () {
+        fail(null);
+      });
+  }
+
+  function showSuccess(form) {
+    form.hidden = true;
+    var success = document.getElementById("form-success");
+    if (!success) return;
+    success.classList.add("show");
+    success.setAttribute("tabindex", "-1");
+    success.focus();
+  }
+
+  function showSendError(form, message) {
+    var summary = document.getElementById("form-error-summary");
+    if (!summary) return;
+
+    summary.innerHTML = "";
+
+    var title = document.createElement("strong");
+    title.textContent = "No pudimos enviar tu solicitud.";
+    summary.appendChild(title);
+
+    if (message) {
+      var detail = document.createElement("p");
+      detail.textContent = message;
+      summary.appendChild(detail);
+    }
+
+    var retry = document.createElement("p");
+    retry.appendChild(document.createTextNode("Intenta de nuevo o "));
+    var wa = document.createElement("a");
+    wa.href =
+      "https://wa.me/" +
+      CONFIG.whatsappNumber +
+      "?text=" +
+      encodeURIComponent(buildWhatsAppMessage(form));
+    wa.target = "_blank";
+    wa.rel = "noopener";
+    wa.textContent = "envíala por WhatsApp";
+    retry.appendChild(wa);
+    retry.appendChild(document.createTextNode("."));
+    summary.appendChild(retry);
+
+    summary.classList.add("show");
+    summary.setAttribute("tabindex", "-1");
+    summary.focus();
   }
 
   function prefillFromQuery(form) {
@@ -234,6 +294,22 @@
         fieldWrap.classList.remove("has-error");
       }
     });
+
+    // Validación especial para checkboxes de productos
+    var productCheckboxes = form.querySelectorAll('input[name="productos"]');
+    if (productCheckboxes.length > 0) {
+      var anyChecked = Array.from(productCheckboxes).some(function (cb) { return cb.checked; });
+      if (!anyChecked) {
+        var productFieldWrap = form.querySelector('input[name="productos"]').closest(".form-field");
+        if (productFieldWrap) productFieldWrap.classList.add("has-error");
+        errors.push({
+          id: "productos-error",
+          label: "Productos de interés",
+        });
+      } else if (productCheckboxes[0].closest(".form-field")) {
+        productCheckboxes[0].closest(".form-field").classList.remove("has-error");
+      }
+    }
 
     return errors;
   }
