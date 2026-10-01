@@ -156,7 +156,10 @@
     });
 
     var initial = new URLSearchParams(window.location.search).get("categoria");
-    if (initial && filterBar.querySelector('[data-filter="' + initial + '"]')) {
+    var known = Array.prototype.some.call(buttons, function (btn) {
+      return btn.dataset.filter === initial;
+    });
+    if (initial && known) {
       applyFilter(initial);
     }
   }
@@ -265,10 +268,9 @@
   function prefillFromQuery(form) {
     var producto = new URLSearchParams(window.location.search).get("producto");
     if (!producto) return;
-    var checkbox = form.querySelector(
-      'input[name="productos"][value="' + producto + '"]'
-    );
-    if (checkbox) checkbox.checked = true;
+    form.querySelectorAll('input[name="productos"]').forEach(function (cb) {
+      if (cb.value === producto) cb.checked = true;
+    });
   }
 
   function validateForm(form) {
@@ -281,6 +283,10 @@
       var value = field.value.trim();
 
       if (field.type === "email" && value && !/^\S+@\S+\.\S+$/.test(value)) {
+        isValid = false;
+      }
+
+      if (field.type === "tel" && value && value.replace(/\D/g, "").length < 10) {
         isValid = false;
       }
 
