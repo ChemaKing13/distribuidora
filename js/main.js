@@ -183,7 +183,7 @@
       '<button class="promo-close" type="button" data-promo-close aria-label="Cerrar">' +
       '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>' +
       "</button>" +
-      '<div class="promo-media" aria-hidden="true"><img src="assets/images/hero-bar-mobile.jpg" alt="" width="900" height="675"></div>' +
+      '<div class="promo-media" aria-hidden="true"><img src="assets/images/catalogo/otros.jpg" alt="" width="960" height="960"></div>' +
       '<div class="promo-body">' +
       '<h2 id="promo-title" class="promo-title">' +
       '<span class="promo-figure">Hasta 20%</span>' +

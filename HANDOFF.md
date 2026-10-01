@@ -154,7 +154,7 @@ Corre en **puerto 8001** → http://localhost:8001
 un sitio de barbería llamado "La Estelar"). No cerrar ese proceso sin preguntar.
 
 ### Artifact publicado (link para compartir)
-**https://claude.ai/artifact/NJSArZV5tsm7w6Q2uf6R1i** — versión 8 (2026-10-01), al día con la carpeta local (incluye la ventana de descuento):
+**https://claude.ai/artifact/NJSArZV5tsm7w6Q2uf6R1i** — versión 9 (2026-10-01), al día con la carpeta local (incluye la ventana de descuento):
 precios en las 9 categorías, fotos del catálogo y correcciones de la revisión final.
 Al cambiar archivos, republicar con `url` y en `files` solo los que cambiaron.
 
@@ -327,7 +327,7 @@ Si también quiere regenerar el hero, darle la sección 8.2.
 4. Verificar en el navegador con la precaución de caché del punto 9.7.
 
 ### Paso 3 — Republicar el artifact
-Hecho el 2026-10-01 (versión 8). Repetir tras cada cambio local.
+Hecho el 2026-10-01 (versión 9). Repetir tras cada cambio local.
 
 ### Paso 4 — Pendientes menores (preguntar antes, no son urgentes)
 - Corregir el aviso de privacidad (WhatsApp → Web3Forms) y la meta descripción de contacto.
