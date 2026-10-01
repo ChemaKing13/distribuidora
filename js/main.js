@@ -22,6 +22,7 @@
     setupScrollReveal();
     setupCatalogFilter();
     setupQuoteForm();
+    setupPromoDialog();
   });
 
   /* ---------- Config de contacto en todo el sitio ---------- */
@@ -162,6 +163,59 @@
     if (initial && known) {
       applyFilter(initial);
     }
+  }
+
+  /* ---------- Ventana de oferta de primera compra ---------- */
+  function setupPromoDialog() {
+    // En Contacto la oferta ya está junto al formulario.
+    if (document.getElementById("quote-form")) return;
+    if (typeof HTMLDialogElement !== "function") return;
+    try {
+      if (sessionStorage.getItem("ac-promo-visto")) return;
+    } catch (e) {}
+
+    var dialog = document.createElement("dialog");
+    dialog.className = "promo-dialog";
+    dialog.setAttribute("aria-labelledby", "promo-title");
+    dialog.setAttribute("aria-describedby", "promo-text");
+    dialog.innerHTML =
+      '<div class="promo-inner">' +
+      '<button class="promo-close" type="button" data-promo-close aria-label="Cerrar">' +
+      '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>' +
+      "</button>" +
+      '<div class="promo-media" aria-hidden="true"><img src="assets/images/hero-bar-mobile.jpg" alt="" width="900" height="675"></div>' +
+      '<div class="promo-body">' +
+      '<h2 id="promo-title" class="promo-title">' +
+      '<span class="promo-figure">Hasta 20%</span>' +
+      '<span class="promo-caption">de descuento en tu primera compra</span>' +
+      "</h2>" +
+      '<p id="promo-text" class="promo-text">Cotiza con nuestros precios para negocio y recibe del 10% al 20% de descuento en tu primer pedido.</p>' +
+      '<div class="promo-actions">' +
+      '<a class="btn btn-gold btn-block" href="contacto.html">Solicitar cotización</a>' +
+      '<button class="promo-dismiss" type="button" data-promo-close>Ahora no</button>' +
+      "</div>" +
+      "</div>" +
+      "</div>";
+    document.body.appendChild(dialog);
+
+    function close() {
+      dialog.close();
+    }
+    dialog.querySelectorAll("[data-promo-close]").forEach(function (btn) {
+      btn.addEventListener("click", close);
+    });
+    // El diálogo no tiene relleno propio: un clic directo sobre él es un clic en el fondo.
+    dialog.addEventListener("click", function (e) {
+      if (e.target === dialog) close();
+    });
+
+    setTimeout(function () {
+      if (document.querySelector(".nav-links.open")) return;
+      try {
+        sessionStorage.setItem("ac-promo-visto", "1");
+      } catch (e) {}
+      dialog.showModal();
+    }, 1200);
   }
 
   /* ---------- Formulario de cotización → email (Web3Forms) ---------- */

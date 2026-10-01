@@ -154,11 +154,9 @@ Corre en **puerto 8001** → http://localhost:8001
 un sitio de barbería llamado "La Estelar"). No cerrar ese proceso sin preguntar.
 
 ### Artifact publicado (link para compartir)
-**https://claude.ai/artifact/NJSArZV5tsm7w6Q2uf6R1i** — versión 6.
-
-⚠️ **Está desactualizado.** La v6 se publicó ANTES de agregar las fotos del catálogo.
-Le faltan: `assets/images/catalogo/*.jpg` (9 archivos), el `catalogo.html` con las fotos
-y el `css/styles.css` con las reglas `.product-photo`. Hay que republicarlo.
+**https://claude.ai/artifact/NJSArZV5tsm7w6Q2uf6R1i** — versión 8 (2026-10-01), al día con la carpeta local (incluye la ventana de descuento):
+precios en las 9 categorías, fotos del catálogo y correcciones de la revisión final.
+Al cambiar archivos, republicar con `url` y en `files` solo los que cambiaron.
 
 ---
 
@@ -328,12 +326,8 @@ Si también quiere regenerar el hero, darle la sección 8.2.
    en el nombre del archivo ni en la descripción: mirar la imagen.
 4. Verificar en el navegador con la precaución de caché del punto 9.7.
 
-### Paso 3 — Republicar el artifact (está desactualizado)
-```
-url: https://claude.ai/artifact/NJSArZV5tsm7w6Q2uf6R1i
-```
-Incluir los 9 archivos de `assets/images/catalogo/`, el `catalogo.html` y el `css/styles.css`
-actualizados. Usar `overwrite_unread` para los archivos ya publicados que cambiaron.
+### Paso 3 — Republicar el artifact
+Hecho el 2026-10-01 (versión 8). Repetir tras cada cambio local.
 
 ### Paso 4 — Pendientes menores (preguntar antes, no son urgentes)
 - Corregir el aviso de privacidad (WhatsApp → Web3Forms) y la meta descripción de contacto.
